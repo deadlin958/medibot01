@@ -1,0 +1,192 @@
+/* ═══════════════════════════════════════════════════════════════
+   image.css — Image Upload Panel, Preview, Loading States
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Upload Button Area ──────────────────────────────────────────── */
+#upload-btn-wrap { position: relative; flex-shrink: 0; }
+
+#upload-trigger {
+  height: 48px;
+  width: 48px;
+  padding: 0;
+  position: relative;
+}
+#upload-trigger.has-image {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+#file-input { display: none; }
+
+/* ── Image Preview Strip (above input) ───────────────────────────── */
+#image-preview-strip {
+  max-width: 900px;
+  margin: 0 auto 8px;
+  display: none;
+}
+
+#image-preview-strip.visible { display: flex; }
+
+.preview-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  animation: fadeUp 0.25s ease;
+}
+
+.preview-thumbnail {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+
+.preview-info { flex: 1; min-width: 0; }
+.preview-name {
+  font-size: 12px;
+  color: var(--text-primary);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.preview-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.preview-remove {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: color var(--transition), background var(--transition);
+  display: flex;
+  align-items: center;
+}
+.preview-remove:hover { color: var(--emergency); background: var(--emergency-bg); }
+
+/* ── Drag Overlay ────────────────────────────────────────────────── */
+#drop-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 212, 255, 0.08);
+  border: 3px dashed var(--accent);
+  border-radius: var(--radius-lg);
+  z-index: 500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+#drop-overlay.active { display: flex; }
+
+.drop-icon  { font-size: 52px; }
+.drop-label {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--accent);
+}
+.drop-sub {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* ── Image in chat (user bubble) ─────────────────────────────────── */
+.image-user-bubble {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.image-user-bubble .img-preview {
+  max-width: 220px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+}
+.image-user-bubble .img-question {
+  font-size: 13px;
+  color: rgba(255,255,255,0.9);
+}
+
+/* ── Image analysis badge ─────────────────────────────────────────── */
+.image-analysis-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--accent);
+  background: var(--accent-glow);
+  border: 1px solid var(--border-accent);
+  border-radius: 20px;
+  padding: 3px 9px;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+/* ── Image description card ───────────────────────────────────────── */
+.image-description-card {
+  background: rgba(0, 212, 255, 0.04);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.image-description-card strong {
+  color: var(--accent) !important;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── Loading shimmer (for images) ─────────────────────────────────── */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--bg-elevated) 25%,
+    rgba(255,255,255,0.06) 50%,
+    var(--bg-elevated) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Upload progress ──────────────────────────────────────────────── */
+.upload-progress-bar {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+.upload-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-dark), var(--accent));
+  border-radius: 2px;
+  transition: width 0.3s ease;
+  width: 0;
+}

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClinicalBot — AI Medical Guidance Assistant</title>
+  <meta name="description"
+    content="A safe, evidence-based clinical chatbot powered by PubMedQA and GPT-4o. Get preliminary medical guidance before seeing a doctor.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/static/css/main.css">
+  <link rel="stylesheet" href="/static/css/chat.css">
+  <link rel="stylesheet" href="/static/css/image.css">
+
+  <!-- Markdown renderer -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- Configure marked -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.marked) {
+        marked.setOptions({ breaks: true, gfm: true, sanitize: false });
+      }
+    });
+  </script>
+</head>
+
+<body>
+<div id="app">
+
+  <!-- ═══════ HEADER ═══════ -->
+  <header id="header">
+    <div class="header-logo">
+      <div class="logo-icon">🏥</div>
+      <span class="logo-text">ClinicalBot</span>
+      <span class="logo-badge">PubMedQA · GPT-4o</span>
+    </div>
+
+    <div class="header-spacer"></div>
+
+    <div class="header-actions">
+      <span class="session-badge" id="session-badge" title="Your anonymous session ID">
+        loading…
+      </span>
+      <button class="btn btn-ghost" id="sidebar-toggle" title="Toggle history">
+        ☰ History
+      </button>
+      <button class="btn btn-primary" id="new-chat-btn" title="Start a new conversation">
+        ✚ New Chat
+      </button>
+    </div>
+  </header>
+
+  <!-- ═══════ MAIN ═══════ -->
+  <div id="main">
+
+    <!-- ── Sidebar: conversation history ── -->
+    <aside id="sidebar" class="collapsed">
+      <div class="sidebar-header">
+        <div class="sidebar-title">This Session</div>
+      </div>
+      <div id="history-list">
+        <div class="history-empty">
+          <div class="history-empty-icon">💬</div>
+          No conversation yet
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Chat area ── -->
+    <section id="chat-area">
+
+      <!-- Safety disclaimer banner -->
+      <div id="disclaimer-banner">
+        ⚠️ <strong>Not a doctor.</strong> This chatbot provides general guidance only, powered by
+        PubMedQA biomedical research. Always consult a qualified healthcare professional.
+      </div>
+
+      <!-- Triage progress bar -->
+      <div id="triage-progress">
+        <div class="triage-progress-inner">
+          <span class="triage-label">Pre-consultation</span>
+          <div class="triage-dots">
+            <!-- Dots injected by chat.js -->
+          </div>
+          <span class="triage-fraction">0/6</span>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div id="messages">
+        <!-- Populated by JavaScript -->
+      </div>
+
+      <!-- Typing indicator (hidden by default) -->
+      <div id="typing-indicator" class="hidden" style="padding: 0 20px 8px; display:flex; align-items:center; gap:12px;">
+        <div class="typing-avatar">🏥</div>
+        <div class="typing-bubble">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
+      </div>
+
+      <!-- ── Input area ── -->
+      <div id="input-area">
+        <!-- Image preview strip -->
+        <div id="image-preview-strip"></div>
+
+        <div class="input-row">
+          <!-- Upload trigger -->
+          <div id="upload-btn-wrap">
+            <button class="btn-icon" id="upload-trigger" title="Upload a medical image">
+              📷
+            </button>
+            <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp">
+          </div>
+
+          <!-- Text input -->
+          <textarea
+            id="msg-input"
+            rows="1"
+            placeholder="Type your message… (Enter to send, Shift+Enter for new line)"
+            aria-label="Chat message input"
+          ></textarea>
+
+          <!-- Send button -->
+          <button class="btn btn-accent" id="send-btn" title="Send message">
+            ➤
+          </button>
+        </div>
+      </div>
+
+    </section><!-- end chat-area -->
+  </div><!-- end main -->
+
+</div><!-- end app -->
+
+<!-- Drag overlay -->
+<div id="drop-overlay">
+  <div class="drop-icon">🖼</div>
+  <div class="drop-label">Drop your medical image here</div>
+  <div class="drop-sub">JPG, PNG, WebP, GIF, BMP — max 10 MB</div>
+</div>
+
+<!-- Toast notifications -->
+<div id="toast-container"></div>
+
+<!-- Scripts (order matters) -->
+<script src="/static/js/session.js"></script>
+<script src="/static/js/api.js"></script>
+<script src="/static/js/chat.js"></script>
+<script src="/static/js/upload.js"></script>
+<script src="/static/js/app.js"></script>
+
+</body>
+</html>

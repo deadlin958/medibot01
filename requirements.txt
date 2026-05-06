@@ -1,0 +1,34 @@
+# Clinical Chatbot — Python Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core LLM & LangChain
+openai>=1.23.0
+langchain>=0.3.26
+langchain-openai>=0.3.24
+langchain-community>=0.3.26
+langchain-core>=0.3.66
+langchain-text-splitters>=0.3.8
+
+# Vector store
+chromadb>=0.6.0
+
+# Embeddings (local, free)
+sentence-transformers>=3.0.0
+
+# Web framework — FastAPI
+fastapi>=0.110.0
+uvicorn[standard]>=0.29.0
+python-multipart>=0.0.9      # required for FastAPI file/form uploads
+
+# Data processing
+pandas>=2.2.0
+numpy>=1.26.0
+
+# Image processing
+pillow>=10.0.0
+
+# Token counting
+tiktoken>=0.9.0
+
+# Environment variables
+python-dotenv>=1.0.0
